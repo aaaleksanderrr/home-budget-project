@@ -1,0 +1,19 @@
+.logo {
+  width: 100px;
+  aspect-ratio: 1;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.border {
+  border: 1px solid black;
+}
+
+.main-section {
+  display: flex;
+  flex-direction: row;
+}
