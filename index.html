@@ -11,8 +11,42 @@
       <img src="budget.png" class="logo" />
       <h1 id="info">Możesz jeszcze wydać milion złotych</h1>
       <div class="main-section">
-        <div class="revenue-section border"></div>
-        <div class="expenses-section border"></div>
+        <div class="sub-section border">
+          <p class="header header-incomes">PRZYCHODY</p>
+          <div class="form form-incomes">
+            <input
+              type="text"
+              id="nameIncome"
+              class="form-element form-element-name"
+              placeholder="Nazwa przychodu"
+            />
+            <input
+              type="number"
+              id="valueIncome"
+              class="form-element form-element-value"
+              placeholder="Kwota"
+            />
+            <button id="btnAddIncome" class="form-element">Dodaj</button>
+          </div>
+        </div>
+        <div class="sub-section border">
+          <p class="header header-expenses">WYDATKI</p>
+          <div class="form form-expenses">
+            <input
+              type="text"
+              id="nameExpense"
+              class="form-element form-element-name"
+              placeholder="Nazwa wydatku"
+            />
+            <input
+              type="number"
+              id="valueExpense"
+              class="form-element form-element-value"
+              placeholder="Kwota"
+            />
+            <button id="btnAddExpense" class="form-element">Dodaj</button>
+          </div>
+        </div>
       </div>
     </div>
     <script src="index.js"></script>

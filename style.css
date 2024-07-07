@@ -3,17 +3,75 @@
   aspect-ratio: 1;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .border {
   border: 1px solid black;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  margin: 5px auto;
+}
+
+#info {
+  text-align: center;
+}
+
 .main-section {
   display: flex;
+  flex-direction: column;
+}
+
+.sub-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 5px;
+}
+
+.header-incomes {
+  color: lightgreen;
+}
+
+.header-expenses {
+  color: lightcoral;
+}
+
+.form {
+  display: flex;
   flex-direction: row;
+  overflow: hidden;
+  padding: 10px;
+  justify-content: space-between;
+}
+
+.form-element {
+  margin: 3px;
+  padding: 5px;
+}
+
+.form-element-name {
+  /* width: 60%; */
+  width: 160px;
+}
+
+.form-element-value {
+  /* width: 20%; */
+  width: 40px;
+}
+
+.form-incomes > input {
+  background-color: lightgreen;
+}
+
+.form-expenses > input {
+  background-color: lightcoral;
 }
