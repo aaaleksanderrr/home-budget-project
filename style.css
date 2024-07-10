@@ -7,6 +7,10 @@
   border: 1px solid black;
 }
 
+.text-bold {
+  font-weight: bold;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -19,6 +23,10 @@
   text-align: center;
 }
 
+.display-currency::after {
+  content: " zł";
+}
+
 .main-section {
   display: flex;
   flex-direction: column;
@@ -27,13 +35,13 @@
 .sub-section {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   justify-content: center;
+  padding: 5px;
 }
 
 .header {
   font-size: 24px;
-  font-weight: bold;
   margin: 5px;
 }
 
@@ -59,19 +67,17 @@
 }
 
 .form-element-name {
-  /* width: 60%; */
-  width: 160px;
+  width: 180px;
 }
 
 .form-element-value {
-  /* width: 20%; */
-  width: 40px;
+  width: 60px;
 }
 
-.form-incomes > input {
+.form-incomes > button {
   background-color: lightgreen;
 }
 
-.form-expenses > input {
+.form-expenses > button {
   background-color: lightcoral;
 }

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Domowy budżet</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="reset.css" />
   </head>
   <body>
     <div class="container">
@@ -12,7 +13,7 @@
       <h1 id="info">Możesz jeszcze wydać milion złotych</h1>
       <div class="main-section">
         <div class="sub-section border">
-          <p class="header header-incomes">PRZYCHODY</p>
+          <p class="header header-incomes text-bold">PRZYCHODY</p>
           <div class="form form-incomes">
             <input
               type="text"
@@ -28,9 +29,14 @@
             />
             <button id="btnAddIncome" class="form-element">Dodaj</button>
           </div>
+          <ul id="listIncomes"></ul>
+          <p>
+            Suma przychodów:
+            <span id="sumValueIncomes" class="display-currency text-bold"></span>
+          </p>
         </div>
         <div class="sub-section border">
-          <p class="header header-expenses">WYDATKI</p>
+          <p class="header header-expenses text-bold">WYDATKI</p>
           <div class="form form-expenses">
             <input
               type="text"
@@ -46,6 +52,10 @@
             />
             <button id="btnAddExpense" class="form-element">Dodaj</button>
           </div>
+          <ul id="listExpenses"></ul>
+          <p>
+            Suma wydatków: <span id="sumValueExpenses" class="display-currency text-bold"></span>
+          </p>
         </div>
       </div>
     </div>
