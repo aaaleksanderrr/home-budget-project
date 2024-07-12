@@ -27,6 +27,10 @@
   content: " zł";
 }
 
+.display-separator::after {
+  content: " - ";
+}
+
 .main-section {
   display: flex;
   flex-direction: column;
@@ -56,9 +60,7 @@
 .form {
   display: flex;
   flex-direction: row;
-  overflow: hidden;
   padding: 10px;
-  justify-content: space-between;
 }
 
 .form-element {
@@ -80,4 +82,26 @@
 
 .form-expenses > button {
   background-color: lightcoral;
+}
+
+.li-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.item-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex: 1;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.hidden {
+  display: none;
 }
