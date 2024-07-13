@@ -13,9 +13,9 @@ const listExpenses = document.getElementById("listExpenses");
 let displaySumValueIncomes = 0;
 let displaySumValueExpenses = 0;
 
-const applyClass = (array, className) => {
+const hideTags = (array) => {
   array.forEach((element) => {
-    element.className = className;
+    element.className = "hidden";
   });
 };
 
@@ -24,6 +24,15 @@ const removeTags = (array) => {
     element.remove();
   });
 };
+
+// const restoreDefaultView = () => {
+//   removeTags([editNameForm, editValueForm, saveBtn, cancelBtn]);
+
+//   btnEdit.classList.remove("hidden");
+//   btnRemove.classList.remove("hidden");
+//   spanName.className = "display-separator";
+//   spanValue.className = "display-currency text-bold";
+// };
 
 sumValueIncomes.innerText = displaySumValueIncomes;
 sumValueExpenses.innerText = displaySumValueExpenses;
@@ -70,7 +79,7 @@ const handleClick = (type) => {
 
   const handleItemClick = (type) => {
     if (type === "Edit") {
-      applyClass([spanName, spanValue, btnEdit, btnRemove], "hidden");
+      hideTags([spanName, spanValue, btnEdit, btnRemove]);
 
       const editNameForm = document.createElement("input");
       editNameForm.type = "text";
@@ -99,7 +108,35 @@ const handleClick = (type) => {
           spanName.className = "display-separator";
           spanValue.className = "display-currency text-bold";
         } else if (type === "Save") {
-          // to do
+          removeTags([editNameForm, editValueForm, saveBtn, cancelBtn]);
+
+          btnEdit.classList.remove("hidden");
+          btnRemove.classList.remove("hidden");
+          spanName.className = "display-separator";
+          spanValue.className = "display-currency text-bold";
+
+          if (li.id === "Income") {
+            if (editValueForm.value > Number(spanValue.innerText)) {
+              displaySumValueIncomes += editValueForm.value - Number(spanValue.innerText);
+              sumValueIncomes.innerText = displaySumValueIncomes;
+            } else if (editValueForm.value < Number(spanValue.innerText)) {
+              displaySumValueIncomes -= Number(spanValue.innerText) - editValueForm.value;
+              sumValueIncomes.innerText = displaySumValueIncomes;
+            }
+          }
+
+          if (li.id === "Expense") {
+            if (editValueForm.value > Number(spanValue.innerText)) {
+              displaySumValueExpenses += editValueForm.value - Number(spanValue.innerText);
+              sumValueExpenses.innerText = displaySumValueExpenses;
+            } else if (editValueForm.value < Number(spanValue.innerText)) {
+              displaySumValueExpenses -= Number(spanValue.innerText) - editValueForm.value;
+              sumValueExpenses.innerText = displaySumValueExpenses;
+            }
+          }
+
+          spanName.innerText = editNameForm.value;
+          spanValue.innerText = editValueForm.value;
         }
       };
 
@@ -108,10 +145,10 @@ const handleClick = (type) => {
     }
     if (type === "Remove") {
       if (li.id === "Income") {
-        displaySumValueIncomes -= Number(valueIncome.value);
+        displaySumValueIncomes -= Number(spanValue.innerText);
         sumValueIncomes.innerText = displaySumValueIncomes;
       } else if (li.id === "Expense") {
-        displaySumValueExpenses -= Number(valueExpense.value);
+        displaySumValueExpenses -= Number(spanValue.innerText);
         sumValueExpenses.innerText = displaySumValueExpenses;
       }
 
