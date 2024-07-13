@@ -30,7 +30,8 @@ sumValueExpenses.innerText = displaySumValueExpenses;
 
 const handleClick = (type) => {
   const li = document.createElement("li");
-  type === "Income" ? listIncomes.appendChild(li) : listExpenses.appendChild(li);
+  li.id = type;
+  document.querySelector(`#list${type}s`).appendChild(li);
 
   const divLi = document.createElement("div");
   divLi.className = "li-wrapper";
@@ -39,24 +40,20 @@ const handleClick = (type) => {
   divItem.className = "item-wrapper";
 
   const spanName = document.createElement("span");
-  type === "Income"
-    ? (spanName.innerText = nameIncome.value)
-    : (spanName.innerText = nameExpense.value);
+  spanName.innerText = String(document.querySelector(`#name${type}`).value);
   spanName.className = "display-separator";
 
   const spanValue = document.createElement("span");
-  type === "Income"
-    ? (spanValue.innerText = valueIncome.value)
-    : (spanValue.innerText = valueExpense.value);
+  spanValue.innerText = document.querySelector(`#value${type}`).value;
   spanValue.className = "display-currency text-bold";
 
-  type === "Income"
-    ? (displaySumValueIncomes += Number(valueIncome.value))
-    : (displaySumValueExpenses += Number(valueExpense.value));
-
-  type === "Income"
-    ? (sumValueIncomes.innerText = displaySumValueIncomes)
-    : (sumValueExpenses.innerText = displaySumValueExpenses);
+  if (type === "Income") {
+    displaySumValueIncomes += Number(valueIncome.value);
+    sumValueIncomes.innerText = displaySumValueIncomes;
+  } else if (type === "Expense") {
+    displaySumValueExpenses += Number(valueExpense.value);
+    sumValueExpenses.innerText = displaySumValueExpenses;
+  }
 
   const divButtons = document.createElement("div");
   divButtons.className = "button-wrapper";
@@ -108,6 +105,17 @@ const handleClick = (type) => {
 
       cancelBtn.addEventListener("click", () => handleEditClick("Cancel"));
       saveBtn.addEventListener("click", () => handleEditClick("Save"));
+    }
+    if (type === "Remove") {
+      if (li.id === "Income") {
+        displaySumValueIncomes -= Number(valueIncome.value);
+        sumValueIncomes.innerText = displaySumValueIncomes;
+      } else if (li.id === "Expense") {
+        displaySumValueExpenses -= Number(valueExpense.value);
+        sumValueExpenses.innerText = displaySumValueExpenses;
+      }
+
+      li.remove();
     }
   };
 
