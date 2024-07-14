@@ -46,9 +46,8 @@
 .sub-section {
   display: flex;
   flex-direction: column;
-  align-items: left;
-  justify-content: center;
   padding: 5px;
+  height: 100%;
 }
 
 .header {
