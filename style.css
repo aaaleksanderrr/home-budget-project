@@ -7,6 +7,11 @@
   border: 1px solid black;
 }
 
+.title {
+  font-size: 30px;
+  margin: 15px;
+}
+
 .text-bold {
   font-weight: bold;
 }
@@ -16,11 +21,12 @@
   flex-direction: column;
   align-items: center;
   width: 90%;
-  margin: 5px auto;
+  margin: 15px auto;
 }
 
-#info {
+.balance-section {
   text-align: center;
+  padding: 15px;
 }
 
 .display-currency::after {
@@ -34,6 +40,7 @@
 .main-section {
   display: flex;
   flex-direction: column;
+  margin: 10px;
 }
 
 .sub-section {
@@ -104,4 +111,17 @@
 
 .hidden {
   display: none;
+}
+
+@media screen and (min-width: 960px) {
+  .container {
+    width: 960px;
+  }
+  .main-section {
+    flex-direction: row;
+  }
+
+  .sub-section {
+    width: 400px;
+  }
 }

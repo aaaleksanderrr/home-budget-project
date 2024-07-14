@@ -10,6 +10,9 @@ const btnAddExpense = document.getElementById("btnAddExpense");
 const sumValueExpenses = document.getElementById("sumValueExpenses");
 const listExpenses = document.getElementById("listExpenses");
 
+const info = document.getElementById("info");
+const balance = document.getElementById("balance");
+
 let displaySumValueIncomes = 0;
 let displaySumValueExpenses = 0;
 
@@ -24,15 +27,6 @@ const removeTags = (array) => {
     element.remove();
   });
 };
-
-// const restoreDefaultView = () => {
-//   removeTags([editNameForm, editValueForm, saveBtn, cancelBtn]);
-
-//   btnEdit.classList.remove("hidden");
-//   btnRemove.classList.remove("hidden");
-//   spanName.className = "display-separator";
-//   spanValue.className = "display-currency text-bold";
-// };
 
 sumValueIncomes.innerText = displaySumValueIncomes;
 sumValueExpenses.innerText = displaySumValueExpenses;
@@ -134,6 +128,17 @@ const handleClick = (type) => {
               sumValueExpenses.innerText = displaySumValueExpenses;
             }
           }
+          balance.className = "display-currency text-bold";
+          if (displaySumValueIncomes - displaySumValueExpenses > 0) {
+            info.innerText = "Możesz jeszcze wydać:";
+            balance.innerText = displaySumValueIncomes - displaySumValueExpenses;
+          } else if (displaySumValueIncomes - displaySumValueExpenses < 0) {
+            info.innerText = "Bilans jest ujemny. Jesteś na minusie:";
+            balance.innerText = displaySumValueExpenses - displaySumValueIncomes;
+          } else if (displaySumValueIncomes - displaySumValueExpenses === 0) {
+            info.innerText = "Bilans wynosi zero";
+            balance.className = "hidden";
+          }
 
           spanName.innerText = editNameForm.value;
           spanValue.innerText = editValueForm.value;
@@ -151,6 +156,16 @@ const handleClick = (type) => {
         displaySumValueExpenses -= Number(spanValue.innerText);
         sumValueExpenses.innerText = displaySumValueExpenses;
       }
+      balance.className = "display-currency text-bold";
+      if (displaySumValueIncomes - displaySumValueExpenses > 0) {
+        balance.innerText = displaySumValueIncomes - displaySumValueExpenses;
+      } else if (displaySumValueIncomes - displaySumValueExpenses < 0) {
+        info.innerText = "Bilans jest ujemny. Jesteś na minusie:";
+        balance.innerText = displaySumValueIncomes - displaySumValueExpenses;
+      } else if (displaySumValueIncomes - displaySumValueExpenses === 0) {
+        info.innerText = "Bilans wynosi zero";
+        balance.className = "hidden";
+      }
 
       li.remove();
     }
@@ -158,6 +173,18 @@ const handleClick = (type) => {
 
   btnEdit.addEventListener("click", () => handleItemClick("Edit"));
   btnRemove.addEventListener("click", () => handleItemClick("Remove"));
+
+  balance.className = "display-currency text-bold";
+  if (displaySumValueIncomes - displaySumValueExpenses > 0) {
+    info.innerText = "Możesz jeszcze wydać:";
+    balance.innerText = displaySumValueIncomes - displaySumValueExpenses;
+  } else if (displaySumValueIncomes - displaySumValueExpenses < 0) {
+    info.innerText = "Bilans jest ujemny. Jesteś na minusie:";
+    balance.innerText = displaySumValueExpenses - displaySumValueIncomes;
+  } else if (displaySumValueIncomes - displaySumValueExpenses === 0) {
+    info.innerText = "Bilans wynosi zero";
+    balance.className = "hidden";
+  }
 };
 
 btnAddIncome.addEventListener("click", () => handleClick("Income"));
