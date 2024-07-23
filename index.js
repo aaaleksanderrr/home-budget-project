@@ -11,8 +11,6 @@ const valueExpense = document.getElementById("valueExpense");
 const info = document.getElementById("info");
 const balance = document.getElementById("balance");
 
-const validation = document.querySelector(".validation");
-
 let displaySumValueIncomes = 0;
 let displaySumValueExpenses = 0;
 
@@ -30,6 +28,29 @@ const removeTags = (array) => {
 
 sumValueIncomes.innerText = displaySumValueIncomes;
 sumValueExpenses.innerText = displaySumValueExpenses;
+
+const validate = (input) => {
+  if (input.id === "nameIncome" || input.id === "nameExpense") {
+    input.addEventListener("invalid", () => {
+      input.setCustomValidity("To pole nie może być puste");
+    });
+    input.addEventListener("input", () => {
+      input.setCustomValidity("");
+    });
+  } else if (input.id === "valueIncome" || input.id === "valueExpense") {
+    input.addEventListener("invalid", () => {
+      input.setCustomValidity("Kwota nie może być mniejsza niż 0.01 zł");
+    });
+    input.addEventListener("input", () => {
+      input.setCustomValidity("");
+    });
+  }
+};
+
+validate(nameIncome);
+validate(nameExpense);
+validate(valueIncome);
+validate(valueExpense);
 
 const handleClick = (type) => {
   const li = document.createElement("li");
