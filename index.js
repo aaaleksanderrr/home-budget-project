@@ -1,17 +1,17 @@
+const formIncomes = document.getElementById("formIncomes");
+const sumValueIncomes = document.getElementById("sumValueIncomes");
 const nameIncome = document.getElementById("nameIncome");
 const valueIncome = document.getElementById("valueIncome");
-const btnAddIncome = document.getElementById("btnAddIncome");
-const sumValueIncomes = document.getElementById("sumValueIncomes");
-const listIncomes = document.getElementById("listIncomes");
 
+const formExpenses = document.getElementById("formExpenses");
+const sumValueExpenses = document.getElementById("sumValueExpenses");
 const nameExpense = document.getElementById("nameExpense");
 const valueExpense = document.getElementById("valueExpense");
-const btnAddExpense = document.getElementById("btnAddExpense");
-const sumValueExpenses = document.getElementById("sumValueExpenses");
-const listExpenses = document.getElementById("listExpenses");
 
 const info = document.getElementById("info");
 const balance = document.getElementById("balance");
+
+const validation = document.querySelector(".validation");
 
 let displaySumValueIncomes = 0;
 let displaySumValueExpenses = 0;
@@ -187,5 +187,11 @@ const handleClick = (type) => {
   }
 };
 
-btnAddIncome.addEventListener("click", () => handleClick("Income"));
-btnAddExpense.addEventListener("click", () => handleClick("Expense"));
+formIncomes.addEventListener("submit", (event) => {
+  event.preventDefault();
+  handleClick("Income");
+});
+formExpenses.addEventListener("submit", (event) => {
+  event.preventDefault();
+  handleClick("Expense");
+});

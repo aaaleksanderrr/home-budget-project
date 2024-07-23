@@ -9,59 +9,81 @@
   </head>
   <body>
     <div class="container">
-      <h1 class="title text-bold">Domowy budżet</h1>
-      <img src="budget.png" class="logo" />
+      <header>
+        <h1 class="title text-bold">Domowy budżet</h1>
+        <img src="budget.png" class="logo" />
+      </header>
       <div class="balance-section">
         <p id="info">Balans wynosi zero</p>
         <p id="balance" class="display-currency text-bold hidden"></p>
       </div>
-      <div class="main-section">
-        <div class="sub-section border">
+      <main class="main-section">
+        <section class="sub-section border">
           <p class="header header-incomes text-bold">PRZYCHODY</p>
-          <div class="form form-incomes">
+          <form id="formIncomes" class="form">
             <input
               type="text"
               id="nameIncome"
               class="form-element form-element-name"
               placeholder="Nazwa przychodu"
+              required
             />
             <input
               type="number"
               id="valueIncome"
               class="form-element form-element-value"
               placeholder="Kwota"
+              required
+              min="0.01"
+              step="0.01"
             />
-            <button id="btnAddIncome" class="form-element">Dodaj</button>
-          </div>
+            <input
+              type="submit"
+              id="btnAddIncome"
+              class="form-element incomes-button"
+              value="Dodaj"
+            />
+          </form>
+          <p class="validation text-bold"></p>
           <ul id="listIncomes"></ul>
           <p>
             Suma przychodów:
             <span id="sumValueIncomes" class="display-currency text-bold"></span>
           </p>
-        </div>
-        <div class="sub-section border">
+        </section>
+        <section class="sub-section border">
           <p class="header header-expenses text-bold">WYDATKI</p>
-          <div class="form form-expenses">
+          <form id="formExpenses" class="form">
             <input
               type="text"
               id="nameExpense"
               class="form-element form-element-name"
               placeholder="Nazwa wydatku"
+              required
             />
             <input
               type="number"
               id="valueExpense"
               class="form-element form-element-value"
               placeholder="Kwota"
+              required
+              min="0.01"
+              step="0.01"
             />
-            <button id="btnAddExpense" class="form-element">Dodaj</button>
-          </div>
+            <input
+              type="submit"
+              id="btnAddExpense"
+              class="form-element expenses-button"
+              value="Dodaj"
+            />
+          </form>
+          <p class="validation-errors text-bold"></p>
           <ul id="listExpenses"></ul>
           <p>
             Suma wydatków: <span id="sumValueExpenses" class="display-currency text-bold"></span>
           </p>
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
     <script src="index.js"></script>
   </body>
