@@ -29,22 +29,70 @@ const removeTags = (array) => {
 sumValueIncomes.innerText = displaySumValueIncomes;
 sumValueExpenses.innerText = displaySumValueExpenses;
 
+const calculateBalance = (li, type, spanValue, editValueForm) => {
+  if (li.id === "Income") {
+    if (type === "Save") {
+      if (editValueForm.value > Number(spanValue.innerText)) {
+        displaySumValueIncomes += editValueForm.value - Number(spanValue.innerText);
+        sumValueIncomes.innerText = displaySumValueIncomes;
+      } else if (editValueForm.value < Number(spanValue.innerText)) {
+        displaySumValueIncomes -= Number(spanValue.innerText) - editValueForm.value;
+        sumValueIncomes.innerText = displaySumValueIncomes;
+      }
+    } else if (type === "Remove") {
+      displaySumValueIncomes -= Number(spanValue.innerText);
+      sumValueIncomes.innerText = displaySumValueIncomes;
+    }
+  } else if (li.id === "Expense") {
+    if (type === "Save") {
+      if (editValueForm.value > Number(spanValue.innerText)) {
+        displaySumValueExpenses += editValueForm.value - Number(spanValue.innerText);
+        sumValueExpenses.innerText = displaySumValueExpenses;
+      } else if (editValueForm.value < Number(spanValue.innerText)) {
+        displaySumValueExpenses -= Number(spanValue.innerText) - editValueForm.value;
+        sumValueExpenses.innerText = displaySumValueExpenses;
+      }
+    } else if (type === "Remove") {
+      displaySumValueExpenses -= Number(spanValue.innerText);
+      sumValueExpenses.innerText = displaySumValueExpenses;
+    }
+  }
+};
+
+const updateBalance = () => {
+  balance.className = "display-currency text-bold";
+  if (displaySumValueIncomes - displaySumValueExpenses > 0) {
+    info.innerText = "Możesz jeszcze wydać:";
+    balance.innerText = displaySumValueIncomes - displaySumValueExpenses;
+  } else if (displaySumValueIncomes - displaySumValueExpenses < 0) {
+    info.innerText = "Bilans jest ujemny. Jesteś na minusie:";
+    balance.innerText = displaySumValueExpenses - displaySumValueIncomes;
+  } else if (displaySumValueIncomes - displaySumValueExpenses === 0) {
+    info.innerText = "Bilans wynosi zero";
+    balance.className = "hidden";
+  }
+};
+
+const restoreButtons = (btnEdit, btnRemove, spanName, spanValue) => {
+  btnEdit.classList.remove("hidden");
+  btnRemove.classList.remove("hidden");
+  spanName.className = "display-separator";
+  spanValue.className = "display-currency text-bold";
+};
+
 const validate = (input) => {
   if (input.id === "nameIncome" || input.id === "nameExpense") {
     input.addEventListener("invalid", () => {
       input.setCustomValidity("To pole nie może być puste");
     });
-    input.addEventListener("input", () => {
-      input.setCustomValidity("");
-    });
   } else if (input.id === "valueIncome" || input.id === "valueExpense") {
     input.addEventListener("invalid", () => {
       input.setCustomValidity("Kwota nie może być mniejsza niż 0.01 zł");
     });
-    input.addEventListener("input", () => {
-      input.setCustomValidity("");
-    });
   }
+  input.addEventListener("input", () => {
+    input.setCustomValidity("");
+  });
 };
 
 validate(nameIncome);
@@ -92,6 +140,8 @@ const handleClick = (type) => {
   divButtons.append(btnEdit, btnRemove);
   divLi.append(divItem, divButtons);
 
+  updateBalance();
+
   const handleItemClick = (type) => {
     if (type === "Edit") {
       hideTags([spanName, spanValue, btnEdit, btnRemove]);
@@ -117,49 +167,13 @@ const handleClick = (type) => {
       const handleEditClick = (type) => {
         if (type === "Cancel") {
           removeTags([editNameForm, editValueForm, saveBtn, cancelBtn]);
-
-          btnEdit.classList.remove("hidden");
-          btnRemove.classList.remove("hidden");
-          spanName.className = "display-separator";
-          spanValue.className = "display-currency text-bold";
+          restoreButtons(btnEdit, btnRemove, spanName, spanValue);
         } else if (type === "Save") {
           removeTags([editNameForm, editValueForm, saveBtn, cancelBtn]);
+          restoreButtons(btnEdit, btnRemove, spanName, spanValue);
 
-          btnEdit.classList.remove("hidden");
-          btnRemove.classList.remove("hidden");
-          spanName.className = "display-separator";
-          spanValue.className = "display-currency text-bold";
-
-          if (li.id === "Income") {
-            if (editValueForm.value > Number(spanValue.innerText)) {
-              displaySumValueIncomes += editValueForm.value - Number(spanValue.innerText);
-              sumValueIncomes.innerText = displaySumValueIncomes;
-            } else if (editValueForm.value < Number(spanValue.innerText)) {
-              displaySumValueIncomes -= Number(spanValue.innerText) - editValueForm.value;
-              sumValueIncomes.innerText = displaySumValueIncomes;
-            }
-          }
-
-          if (li.id === "Expense") {
-            if (editValueForm.value > Number(spanValue.innerText)) {
-              displaySumValueExpenses += editValueForm.value - Number(spanValue.innerText);
-              sumValueExpenses.innerText = displaySumValueExpenses;
-            } else if (editValueForm.value < Number(spanValue.innerText)) {
-              displaySumValueExpenses -= Number(spanValue.innerText) - editValueForm.value;
-              sumValueExpenses.innerText = displaySumValueExpenses;
-            }
-          }
-          balance.className = "display-currency text-bold";
-          if (displaySumValueIncomes - displaySumValueExpenses > 0) {
-            info.innerText = "Możesz jeszcze wydać:";
-            balance.innerText = displaySumValueIncomes - displaySumValueExpenses;
-          } else if (displaySumValueIncomes - displaySumValueExpenses < 0) {
-            info.innerText = "Bilans jest ujemny. Jesteś na minusie:";
-            balance.innerText = displaySumValueExpenses - displaySumValueIncomes;
-          } else if (displaySumValueIncomes - displaySumValueExpenses === 0) {
-            info.innerText = "Bilans wynosi zero";
-            balance.className = "hidden";
-          }
+          calculateBalance(li, type, spanValue, editValueForm);
+          updateBalance();
 
           spanName.innerText = editNameForm.value;
           spanValue.innerText = editValueForm.value;
@@ -170,23 +184,8 @@ const handleClick = (type) => {
       saveBtn.addEventListener("click", () => handleEditClick("Save"));
     }
     if (type === "Remove") {
-      if (li.id === "Income") {
-        displaySumValueIncomes -= Number(spanValue.innerText);
-        sumValueIncomes.innerText = displaySumValueIncomes;
-      } else if (li.id === "Expense") {
-        displaySumValueExpenses -= Number(spanValue.innerText);
-        sumValueExpenses.innerText = displaySumValueExpenses;
-      }
-      balance.className = "display-currency text-bold";
-      if (displaySumValueIncomes - displaySumValueExpenses > 0) {
-        balance.innerText = displaySumValueIncomes - displaySumValueExpenses;
-      } else if (displaySumValueIncomes - displaySumValueExpenses < 0) {
-        info.innerText = "Bilans jest ujemny. Jesteś na minusie:";
-        balance.innerText = displaySumValueIncomes - displaySumValueExpenses;
-      } else if (displaySumValueIncomes - displaySumValueExpenses === 0) {
-        info.innerText = "Bilans wynosi zero";
-        balance.className = "hidden";
-      }
+      calculateBalance(li, type, spanValue);
+      updateBalance();
 
       li.remove();
     }
@@ -194,18 +193,6 @@ const handleClick = (type) => {
 
   btnEdit.addEventListener("click", () => handleItemClick("Edit"));
   btnRemove.addEventListener("click", () => handleItemClick("Remove"));
-
-  balance.className = "display-currency text-bold";
-  if (displaySumValueIncomes - displaySumValueExpenses > 0) {
-    info.innerText = "Możesz jeszcze wydać:";
-    balance.innerText = displaySumValueIncomes - displaySumValueExpenses;
-  } else if (displaySumValueIncomes - displaySumValueExpenses < 0) {
-    info.innerText = "Bilans jest ujemny. Jesteś na minusie:";
-    balance.innerText = displaySumValueExpenses - displaySumValueIncomes;
-  } else if (displaySumValueIncomes - displaySumValueExpenses === 0) {
-    info.innerText = "Bilans wynosi zero";
-    balance.className = "hidden";
-  }
 };
 
 formIncomes.addEventListener("submit", (event) => {
