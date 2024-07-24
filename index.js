@@ -20,14 +20,27 @@ const hideTags = (array) => {
   });
 };
 
-const removeTags = (array) => {
-  array.forEach((element) => {
-    element.remove();
-  });
-};
-
 sumValueIncomes.innerText = displaySumValueIncomes;
 sumValueExpenses.innerText = displaySumValueExpenses;
+
+const validate = (input) => {
+  if (input.id === "nameIncome" || input.id === "nameExpense" || input.id === "nameEdit") {
+    input.addEventListener("invalid", () => {
+      input.setCustomValidity("To pole nie może być puste");
+    });
+  } else if (
+    input.id === "valueIncome" ||
+    input.id === "valueExpense" ||
+    input.id === "valueEdit"
+  ) {
+    input.addEventListener("invalid", () => {
+      input.setCustomValidity("Kwota nie może być mniejsza niż 0.01 zł");
+    });
+  }
+  input.addEventListener("input", () => {
+    input.setCustomValidity("");
+  });
+};
 
 const calculateBalance = (li, type, spanValue, editValueForm) => {
   if (li.id === "Income") {
@@ -78,21 +91,6 @@ const restoreButtons = (btnEdit, btnRemove, spanName, spanValue) => {
   btnRemove.classList.remove("hidden");
   spanName.className = "display-separator";
   spanValue.className = "display-currency text-bold";
-};
-
-const validate = (input) => {
-  if (input.id === "nameIncome" || input.id === "nameExpense") {
-    input.addEventListener("invalid", () => {
-      input.setCustomValidity("To pole nie może być puste");
-    });
-  } else if (input.id === "valueIncome" || input.id === "valueExpense") {
-    input.addEventListener("invalid", () => {
-      input.setCustomValidity("Kwota nie może być mniejsza niż 0.01 zł");
-    });
-  }
-  input.addEventListener("input", () => {
-    input.setCustomValidity("");
-  });
 };
 
 validate(nameIncome);
@@ -146,30 +144,46 @@ const handleClick = (type) => {
     if (type === "Edit") {
       hideTags([spanName, spanValue, btnEdit, btnRemove]);
 
-      const editNameForm = document.createElement("input");
-      editNameForm.type = "text";
-      editNameForm.className = "form-element-name";
-      editNameForm.value = spanName.innerText;
-
-      const editValueForm = document.createElement("input");
-      editValueForm.type = "text";
-      editValueForm.className = "form-element-value";
-      editValueForm.value = spanValue.innerText;
+      const formEdit = document.createElement("form");
+      formEdit.id = "formEdit";
+      formEdit.className = "form";
 
       const saveBtn = document.createElement("button");
+      saveBtn.type = "submit";
       saveBtn.innerText = "Zapisz";
 
       const cancelBtn = document.createElement("button");
       cancelBtn.innerText = "Anuluj";
 
-      divItem.append(editNameForm, editValueForm, saveBtn, cancelBtn);
+      const editNameForm = document.createElement("input");
+      editNameForm.type = "text";
+      editNameForm.id = "nameEdit";
+      editNameForm.className = "form-element-name";
+      editNameForm.setAttribute("required", "");
+
+      const editValueForm = document.createElement("input");
+      editValueForm.type = "number";
+      editValueForm.id = "valueEdit";
+      editValueForm.className = "form-element-value";
+      editValueForm.setAttribute("required", "");
+      editValueForm.setAttribute("min", "0.01");
+      editValueForm.setAttribute("step", "0.01");
+
+      validate(editNameForm);
+      validate(editValueForm);
+
+      editNameForm.value = spanName.innerText;
+      editValueForm.value = spanValue.innerText;
+
+      formEdit.append(editNameForm, editValueForm, saveBtn, cancelBtn);
+      divItem.appendChild(formEdit);
 
       const handleEditClick = (type) => {
         if (type === "Cancel") {
-          removeTags([editNameForm, editValueForm, saveBtn, cancelBtn]);
+          formEdit.remove();
           restoreButtons(btnEdit, btnRemove, spanName, spanValue);
         } else if (type === "Save") {
-          removeTags([editNameForm, editValueForm, saveBtn, cancelBtn]);
+          formEdit.remove();
           restoreButtons(btnEdit, btnRemove, spanName, spanValue);
 
           calculateBalance(li, type, spanValue, editValueForm);
@@ -181,7 +195,10 @@ const handleClick = (type) => {
       };
 
       cancelBtn.addEventListener("click", () => handleEditClick("Cancel"));
-      saveBtn.addEventListener("click", () => handleEditClick("Save"));
+      formEdit.addEventListener("submit", (event) => {
+        event.preventDefault();
+        handleEditClick("Save");
+      });
     }
     if (type === "Remove") {
       calculateBalance(li, type, spanValue);
