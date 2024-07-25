@@ -17,21 +17,21 @@
         <p id="info">Balans wynosi zero</p>
         <p id="balance" class="display-currency text-bold hidden"></p>
       </div>
-      <main class="main-section">
+      <main class="main-section" novalidate>
         <section class="sub-section border">
           <p class="header header-incomes text-bold">PRZYCHODY</p>
           <form id="formIncomes" class="form">
             <input
               type="text"
               id="nameIncome"
-              class="form-element form-element-name"
+              class="name-income form-element form-element-name"
               placeholder="Nazwa przychodu"
               required
             />
             <input
               type="number"
               id="valueIncome"
-              class="form-element form-element-value"
+              class="value-income form-element form-element-value"
               placeholder="Kwota"
               required
               min="0.01"
@@ -56,14 +56,14 @@
             <input
               type="text"
               id="nameExpense"
-              class="form-element form-element-name"
+              class="name-expense form-element form-element-name"
               placeholder="Nazwa wydatku"
               required
             />
             <input
               type="number"
               id="valueExpense"
-              class="form-element form-element-value"
+              class="value-expense form-element form-element-value"
               placeholder="Kwota"
               required
               min="0.01"

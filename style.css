@@ -3,11 +3,15 @@
   aspect-ratio: 1;
 }
 
-#nameIncome:invalid,
-#nameExpense:invalid,
-#valueExpense:invalid,
-#valueIncome:invalid {
+.invalid {
   border: 2px solid crimson;
+}
+
+.name-income:valid,
+.name-expense:valid,
+.value-income:valid,
+.value-expense:valid {
+  border: 1px solid black;
 }
 
 .border {

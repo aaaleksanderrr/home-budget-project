@@ -26,6 +26,7 @@ sumValueExpenses.innerText = displaySumValueExpenses;
 const validate = (input) => {
   if (input.id === "nameIncome" || input.id === "nameExpense" || input.id === "nameEdit") {
     input.addEventListener("invalid", () => {
+      input.classList.add("invalid");
       input.setCustomValidity("To pole nie może być puste");
     });
   } else if (
@@ -34,6 +35,7 @@ const validate = (input) => {
     input.id === "valueEdit"
   ) {
     input.addEventListener("invalid", () => {
+      input.classList.add("invalid");
       input.setCustomValidity("Kwota nie może być mniejsza niż 0.01 zł");
     });
   }
@@ -41,6 +43,11 @@ const validate = (input) => {
     input.setCustomValidity("");
   });
 };
+
+validate(nameIncome);
+validate(nameExpense);
+validate(valueIncome);
+validate(valueExpense);
 
 const calculateBalance = (li, type, spanValue, editValueForm) => {
   if (li.id === "Income") {
@@ -92,11 +99,6 @@ const restoreButtons = (btnEdit, btnRemove, spanName, spanValue) => {
   spanName.className = "display-separator";
   spanValue.className = "display-currency text-bold";
 };
-
-validate(nameIncome);
-validate(nameExpense);
-validate(valueIncome);
-validate(valueExpense);
 
 const handleClick = (type) => {
   const li = document.createElement("li");
